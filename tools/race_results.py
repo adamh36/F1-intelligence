@@ -1,5 +1,6 @@
 import fastf1
 
+# avoids re-downloading session data on repeated calls
 fastf1.Cache.enable_cache('cache')
 
 
@@ -8,6 +9,7 @@ def get_race_results(year: int, race_name: str) -> str:
     grid positions, time gaps, points, fastest lap, and retirement status."""
 
     session = fastf1.get_session(year, race_name, 'R')
+    # skip telemetry/weather/messages — we only need the results table
     session.load(telemetry=False, weather=False, messages=False)
 
     results = session.results
@@ -20,6 +22,7 @@ def get_race_results(year: int, race_name: str) -> str:
         team = driver['TeamName']
         grid = int(driver['GridPosition'])
         points = driver['Points']
+        # fastf1 sets status to 'Finished', a time gap ('+Xs'), or a retirement reason
         status = driver['Status']
 
         if int(pos) == 1:
