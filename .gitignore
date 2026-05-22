@@ -2,3 +2,8 @@
 cache/
 __pycache__/
 .DS_Store
+.env.local
+.env
+*.log
+*.pyc
+*.pyo   
