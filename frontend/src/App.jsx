@@ -106,7 +106,7 @@ export default function App() {
     try {
       // slice(1) skips the hardcoded welcome message — it's UI only, not from Claude
       const history = messages.slice(1).concat({ role: "user", content: userMessage });
-      const res = await fetch("http://localhost:8000/chat", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL ?? "http://localhost:8000"}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: history }),

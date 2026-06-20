@@ -1,7 +1,7 @@
 import fastf1
 
 # avoids re-downloading session data on repeated calls
-fastf1.Cache.enable_cache('cache')
+import os; os.makedirs('cache', exist_ok=True); fastf1.Cache.enable_cache('cache')
 
 
 def get_race_results(year: int, race_name: str) -> str:

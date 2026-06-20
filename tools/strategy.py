@@ -1,7 +1,7 @@
 import fastf1
 
 
-fastf1.Cache.enable_cache('cache')
+import os; os.makedirs('cache', exist_ok=True); fastf1.Cache.enable_cache('cache')
 
 
 def analyze_strategy(year: int, race_name: str) -> str:

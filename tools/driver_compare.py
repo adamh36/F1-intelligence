@@ -1,7 +1,7 @@
 import fastf1
 
 
-fastf1.Cache.enable_cache('cache')
+import os; os.makedirs('cache', exist_ok=True); fastf1.Cache.enable_cache('cache')
 
 # if session_type is None, pull data from all sessions for richer comparison
 SESSIONS = ['FP1', 'FP2', 'FP3', 'Q', 'R']
