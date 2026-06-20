@@ -12,15 +12,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
-    message: str
+    messages: list[ChatMessage]
 
 class ChatResponse(BaseModel):
     response: str
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    result = run_agent(request.message)
+    history = [{"role": m.role, "content": m.content} for m in request.messages]
+    result = run_agent(history)
     return ChatResponse(response=result)
 
 @app.get("/health")

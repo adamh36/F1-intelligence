@@ -1,4 +1,5 @@
 from langchain_core.tools import tool
+from langchain_core.messages import SystemMessage
 from langchain_anthropic import ChatAnthropic
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -56,8 +57,17 @@ llm_with_tools = llm.bind_tools(tools)
 # call_model: Claude thinks and decides what to do next
 # call_tools: executes whichever tool Claude picked
 
+SYSTEM_PROMPT = """You are an F1 Intelligence assistant. Answer questions about Formula 1 using the tools available.
+Rules:
+- No emojis
+- No markdown formatting — no bold, no bullet asterisks, use plain sentences
+- Be concise and direct
+- Use conversation history to understand follow-up questions
+"""
+
 def call_model(state: State):
-    response = llm_with_tools.invoke(state["messages"])
+    messages = [SystemMessage(content=SYSTEM_PROMPT)] + state["messages"]
+    response = llm_with_tools.invoke(messages)
     return {"messages": [response]}
 
 
@@ -67,11 +77,11 @@ def call_model(state: State):
 graph_builder = StateGraph(State)
 
 graph_builder.add_node("call_model", call_model)
-graph_builder.add_node("call_tools", ToolNode(tools))
+graph_builder.add_node("tools", ToolNode(tools))
 
 graph_builder.add_edge(START, "call_model")
 graph_builder.add_conditional_edges("call_model", tools_condition)
-graph_builder.add_edge("call_tools", "call_model")
+graph_builder.add_edge("tools", "call_model")
 
 agent = graph_builder.compile()
 
@@ -79,6 +89,6 @@ agent = graph_builder.compile()
 # --- Entry point ---
 # app.py calls this with the user's message and gets back a string response
 
-def run_agent(user_message: str) -> str:
-    result = agent.invoke({"messages": [{"role": "user", "content": user_message}]})
+def run_agent(messages: list) -> str:
+    result = agent.invoke({"messages": messages})
     return result["messages"][-1].content
