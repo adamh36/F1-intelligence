@@ -2,6 +2,8 @@
 
 **Live app: [f1-intelligence-ruby.vercel.app](https://f1-intelligence-ruby.vercel.app)**
 
+![F1 Intelligence](screenshot.png)
+
 A conversational AI analyst for Formula 1. Ask natural language questions and get answers powered by real race data, live weather, and Claude.
 
 **Example queries**
