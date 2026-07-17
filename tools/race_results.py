@@ -9,8 +9,8 @@ def get_race_results(year: int, race_name: str) -> str:
     grid positions, time gaps, points, fastest lap, and retirement status."""
 
     session = fastf1.get_session(year, race_name, 'R')
-    # skip telemetry/weather/messages — we only need the results table
-    session.load(telemetry=False, weather=False, messages=False)
+    # we only read session.results, so skip laps/telemetry/weather/messages
+    session.load(laps=False, telemetry=False, weather=False, messages=False)
 
     results = session.results
 
