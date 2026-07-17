@@ -15,18 +15,24 @@
   --font: "Inter", system-ui, sans-serif;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background: var(--dark);
   color: var(--text);
   font-family: var(--font);
-  height: 100vh;
+  height: 100svh;
   overflow: hidden;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
   position: relative;
 }
 
@@ -154,6 +160,14 @@ body {
   background: transparent;
   white-space: nowrap;
   text-transform: uppercase;
+}
+
+/* On phones, wrap the badges onto multiple rows instead of a horizontal slide */
+@media (max-width: 640px) {
+  .teams-bar {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
 }
 
 /* Chat window */
