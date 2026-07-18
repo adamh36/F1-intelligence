@@ -48,7 +48,7 @@ def get_weather(circuit_name: str) -> str:
         f"https://api.openweathermap.org/data/2.5/weather"
         f"?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"
     )
-    current = requests.get(current_url).json()
+    current = requests.get(current_url, timeout=10).json()
 
     temp = current['main']['temp']
     feels_like = current['main']['feels_like']
@@ -62,7 +62,7 @@ def get_weather(circuit_name: str) -> str:
         f"https://api.openweathermap.org/data/2.5/forecast"
         f"?lat={lat}&lon={lon}&appid={API_KEY}&units=metric&cnt=8"
     )
-    forecast_data = requests.get(forecast_url).json()
+    forecast_data = requests.get(forecast_url, timeout=10).json()
 
     forecast_lines = []
     for entry in forecast_data['list']:
