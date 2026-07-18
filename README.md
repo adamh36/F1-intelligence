@@ -2,7 +2,7 @@
 
 **Live app: [f1-intelligence-ruby.vercel.app](https://f1-intelligence-ruby.vercel.app)**
 
-> **Note on first response:** The backend runs on a free tier that sleeps after inactivity, so the first request after an idle period can take ~20s while the server wakes up (cold start). Every request after that is fast. Pointing a free uptime pinger (e.g. UptimeRobot) at the `/health` endpoint every ~10 minutes keeps the server warm and avoids this.
+> **Note on first response:** The backend runs on a free tier that sleeps after inactivity, so the first request after an idle period can take ~20s while the server wakes up (cold start). Every request after that is fast.
 
 ![F1 Intelligence](screenshot.png)
 
